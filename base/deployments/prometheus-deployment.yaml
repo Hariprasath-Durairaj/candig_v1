@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: candig
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: prometheus } }
+  template:
+    metadata: { labels: { app: prometheus } }
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest
+          args: ["--storage.tsdb.path=/prometheus"]
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: data
+              mountPath: /prometheus
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: prometheus-data }

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: htsget
+  namespace: candig
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: htsget } }
+  template:
+    metadata: { labels: { app: htsget } }
+    spec:
+      containers:
+        - name: htsget
+          image: ghcr.io/candig/htsget:latest  # TODO: confirm image/repo
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: htsget-data
+              mountPath: /data
+      volumes:
+        - name: htsget-data
+          persistentVolumeClaim: { claimName: htsget-data }

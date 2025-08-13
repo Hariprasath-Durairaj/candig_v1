@@ -1,0 +1,8 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tyk-ingress
+  namespace: candig
+spec:
+  rules:
+  - host: tyk.qa.dhdp.ca

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opa
+  namespace: candig
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: opa }
+  template:
+    metadata:
+      labels: { app: opa }
+    spec:
+      initContainers:
+        - name: secret-generator
+          image: busybox
+          command: ["sh", "-c", "echo Generating opa secrets; sleep 5"]
+          env:
+            - name: SECRET_NAME
+              value: opa-policy-bundle
+      containers:
+        - name: opa
+          image: openpolicyagent/opa:latest
+          args: ["run", "--server", "/policies"]
+          ports:
+            - containerPort: 8181
+          volumeMounts:
+            - name: policies
+              mountPath: /policies
+      volumes:
+        - name: policies
+          configMap:
+            name: opa-bundle

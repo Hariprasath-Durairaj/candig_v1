@@ -1,0 +1,13 @@
+# Prod overlay
+resources:
+  - ../../base
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: candig
+patches:
+  - path: patches/keycloak-ingress-host.yaml
+  - path: patches/grafana-ingress-host.yaml
+  - path: patches/tyk-ingress-host.yaml
+  - patches/keycloak-ingress-host.yaml
+  - patches/grafana-ingress-host.yaml
+  - patches/tyk-ingress-host.yaml

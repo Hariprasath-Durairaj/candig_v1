@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tyk-gateway
+  namespace: candig
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: tyk-gw } }
+  template:
+    metadata: { labels: { app: tyk-gw } }
+    spec:
+      containers:
+        - name: tyk-gateway
+          image: tykio/tyk-gateway:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: tyk-data
+              mountPath: /var/tyk-gateway
+      volumes:
+        - name: tyk-data
+          persistentVolumeClaim: { claimName: tyk-data }

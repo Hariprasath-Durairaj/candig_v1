@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: candig
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        initContainers:
+          - name: secret-generator
+            image: busybox
+            command: ["sh", "-c", "echo Generating postgres secrets; sleep 5"]
+            env:
+              - name: SECRET_NAME
+                value: postgres-db-secret
+        envFrom:
+        - secretRef:
+            name: postgres-db-secret
+        ports:
+          - containerPort: 5432
+        volumeMounts:
+          - name: data
+            mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: postgres-data

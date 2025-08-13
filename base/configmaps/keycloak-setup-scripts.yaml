@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak-setup-scripts
+  namespace: candig
+data:
+  keycloak_setup.sh: |
+    #!/usr/bin/env bash
+    # ...your keycloak_setup.sh script content here...
+  realm_setup.sh: |
+    #!/usr/bin/env bash
+    # ...realm setup script...
+  client_setup.sh: |
+    #!/usr/bin/env bash
+    # ...client setup script...
+  user_setup.sh: |
+    #!/usr/bin/env bash
+    # ...user setup script...

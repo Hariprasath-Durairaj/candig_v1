@@ -1,0 +1,46 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: candig
+resources:
+  - namespaces.yaml
+  - pvc/toil-jobstore-pvc.yaml
+  - pvc/prometheus-data-pvc.yaml
+  - pvc/grafana-data-pvc.yaml
+  - pvc/keycloak-data-pvc.yaml
+  - pvc/opa-data-pvc.yaml
+  - pvc/tyk-data-pvc.yaml
+  - pvc/redis-data-pvc.yaml
+  - pvc/vault-data-pvc.yaml
+  - pvc/htsget-data-pvc.yaml
+  - pvc/postgres-data-pvc.yaml
+  - secrets/postgres-db-secret.yaml
+  - secrets/keycloak-admin-password.yaml
+  - secrets/minio-credentials.yaml
+  - secrets/wes-dependency-resolver.yaml
+  - configmaps/keycloak-config.yaml
+  - configmaps/opa-policy-bundle.yaml
+  - deployments/postgres-deployment.yaml
+  - deployments/keycloak-deployment.yaml
+  - deployments/opa-deployment.yaml
+  - deployments/vault-statefulset.yaml
+  - deployments/redis-statefulset.yaml
+  - deployments/minio-statefulset.yaml
+  - deployments/tyk-deployment.yaml
+  - deployments/htsget-deployment.yaml
+  - deployments/prometheus-deployment.yaml
+  - deployments/grafana-deployment.yaml
+  - deployments/wes-deployment.yaml
+  - services/postgres-service.yaml
+  - services/keycloak-service.yaml
+  - services/opa-service.yaml
+  - services/vault-service.yaml
+  - services/redis-service.yaml
+  - services/minio-service.yaml
+  - services/tyk-service.yaml
+  - services/htsget-service.yaml
+  - services/prometheus-service.yaml
+  - services/grafana-service.yaml
+  - services/wes-service.yaml
+  - ingress/keycloak-ingress.yaml
+  - ingress/grafana-ingress.yaml
+  - ingress/tyk-ingress.yaml

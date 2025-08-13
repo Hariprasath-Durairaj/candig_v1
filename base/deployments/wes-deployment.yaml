@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes
+  namespace: candig
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: wes } }
+  template:
+    metadata: { labels: { app: wes } }
+    spec:
+      initContainers:
+        - name: secret-generator
+          image: busybox
+          command: ["sh", "-c", "echo Generating wes secrets; sleep 5"]
+          env:
+            - name: SECRET_NAME
+              value: wes-dependency-resolver
+      containers:
+        - name: wes
+          image: ghcr.io/candig/wes:latest  # TODO: confirm image/repo
+          ports:
+            - containerPort: 8081
+          envFrom:
+            - secretRef: { name: wes-dependency-resolver }
